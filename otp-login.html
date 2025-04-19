@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OTP Login - The Bong T-Zone</title>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Sign in via OTP</h2>
+
+  <div class="otp-login-box">
+    <input type="email" id="email" placeholder="Enter Gmail" /><br/>
+    <input type="tel" id="phone" placeholder="+91XXXXXXXXXX" /><br/>
+    <div id="recaptcha-container"></div>
+    <button onclick="sendOTP()">Send OTP</button>
+
+    <div id="otp-section" style="display: none;">
+      <input type="text" id="otp" maxlength="6" placeholder="Enter OTP" />
+      <button onclick="verifyOTP()">Verify</button>
+      <p id="countdown">Wait 30s to resend</p>
+    </div>
+
+    <p id="status"></p>
+  </div>
+
+  <script src="firebase-otp.js"></script>
+  <button id="resend-btn" onclick="resendOTP()">Resend OTP</button>
+  <span id="countdown"></span>
+
+</body>
+</html>

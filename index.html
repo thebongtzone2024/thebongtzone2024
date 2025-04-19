@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Bong T-Zone</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Milkyway&display=swap" rel="stylesheet">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <div class="menu" id="menu">
+      <a href="#">Sign In</a>
+      <a href="#">Today's Offer</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Return Policy</a>
+      <a href="#">Shipping Rules</a>
+    </div>
+    <h1 class="brand-title">The Bong T-Zone</h1>
+  </header>
+
+  <section class="offers-section">
+    <h2>Today's Offer</h2>
+    <div class="offer-grid">
+      <div class="offer-item">
+        <img src="https://img.icons8.com/color/96/t-shirt.png" alt="Apparel" />
+        <p>Apparel</p>
+        <button>View More</button>
+      </div>
+      <div class="offer-item">
+        <img src="https://img.icons8.com/color/96/handbag.png" alt="Accessories" />
+        <p>Accessories</p>
+        <button>View More</button>
+      </div>
+      <div class="offer-item">
+        <img src="https://img.icons8.com/color/96/lamp.png" alt="Home Goods" />
+        <p>Home Goods</p>
+        <button>View More</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="products-section">
+    <div class="product-card">
+      <img src="https://img.icons8.com/color/96/t-shirt.png" alt="Product" />
+      <p>Product Name</p>
+      <button class="btn-purple">Add to Bag</button>
+      <button class="btn-light">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="https://img.icons8.com/color/96/earrings.png" alt="Product" />
+      <p>Product Name</p>
+      <button class="btn-purple">Add to Bag</button>
+      <button class="btn-light">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="https://img.icons8.com/color/96/hoodie.png" alt="Product" />
+      <p>Product Name</p>
+      <button class="btn-purple">Add to Bag</button>
+    </div>
+
+    <div class="product-card">
+      <img src="https://img.icons8.com/color/96/potted-plant.png" alt="Product" />
+      <p>Product Name</p>
+      <button class="btn-purple">Add to Bag</button>
+    </div>
+  </section>
+
+  <section class="otp-box">
+    <h3>Mobile & Google OTP Login</h3>
+    <div class="otp-inputs">
+      <input type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+    </div>
+    <p id="otp-status">Verifying...</p>
+  </section>
+
+  <section class="thank-you-box">
+    <h3>Thank you!</h3>
+    <p>We have sent you an update on your shipping status via SMS or WhatsApp.</p>
+    <button>Thanks</button>
+  </section>
+
+  <a href="https://wa.me/916291143551" target="_blank" class="whatsapp-button">
+    <img src="https://img.icons8.com/fluency/48/whatsapp.png" alt="Chat on WhatsApp" />
+  </a>
+</body>
+</html>

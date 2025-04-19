@@ -1,0 +1,137 @@
+body {
+  margin: 0;
+  font-family: 'Milkyway', cursive;
+  background-color: #F7CFD8;
+  color: #3d0066;
+}
+
+.header {
+  text-align: center;
+  padding: 1em;
+  position: relative;
+}
+
+.menu-toggle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.menu {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  background: white;
+  border-radius: 12px;
+  top: 45px;
+  left: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.menu a {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #3d0066;
+  font-size: 0.9em;
+  border-bottom: 1px solid #eee;
+}
+
+.brand-title {
+  font-size: 2em;
+  margin-top: 0;
+}
+
+.offers-section {
+  background-color: #f4f8d3;
+  padding: 1em;
+  border-radius: 20px;
+  margin: 1em;
+}
+
+.offer-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.offer-item {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 1em;
+  text-align: center;
+  width: 120px;
+}
+
+.offer-item button {
+  margin-top: 10px;
+  background-color: #d7f2d3;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.products-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1em;
+  margin: 2em 1em;
+}
+
+.product-card {
+  background-color: #ffeef2;
+  border-radius: 20px;
+  padding: 1em;
+  text-align: center;
+  width: 150px;
+}
+
+.btn-purple {
+  background-color: #8e7dbe;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin-top: 5px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.btn-light {
+  background-color: #ffdcdc;
+  color: #3d0066;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 5px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.otp-box, .thank-you-box {
+  background-color: #ffeef2;
+  margin: 2em auto;
+  padding: 1em;
+  border-radius: 20px;
+  width: 250px;
+  text-align: center;
+}
+
+.otp-inputs input {
+  width: 30px;
+  height: 40px;
+  margin: 0 5px;
+  text-align: center;
+  font-size: 1.2em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
