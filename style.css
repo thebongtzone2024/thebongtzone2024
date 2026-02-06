@@ -1076,9 +1076,10 @@ body.auth-open {
 }
 
 /* Mobile tweak */
-@media (max-width: 600px) {
+@media (max-width: 1200px) {
   .banner-frame {
     aspect-ratio: 3.5 / 1;
   }
 }
+
 
