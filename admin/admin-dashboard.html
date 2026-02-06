@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="brand-box">
+    <button class="hamburger" id="menuBtn">☰</button>
+    <img src="../assets/logo.png" alt="The Bong T-Zone" class="admin-logo">
+    <span class="brand-name">The Bong T-Zone</span>
+  </div>
+</header>
+
+<!-- OVERLAY -->
+<div id="overlay"></div>
+
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <a data-section="dashboard" class="active">Dashboard</a>
+    <a data-section="products">Products</a>
+    <a data-section="banners">Banners</a>
+    <a data-section="orders">Orders</a>
+    <a id="logoutBtn">Logout</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ================= DASHBOARD ================= -->
+    <section id="dashboard" class="section active">
+      <div class="kpi-grid">
+        <div class="kpi-card"><p>Orders</p><h3 id="totalOrders">0</h3></div>
+        <div class="kpi-card"><p>Revenue</p><h3 id="totalRevenue">₹0</h3></div>
+        <div class="kpi-card"><p>Profit</p><h3 id="totalProfit">₹0</h3></div>
+        <div class="kpi-card"><p>Monthly</p><h3 id="monthlyRevenue">₹0</h3></div>
+      </div>
+
+      <div class="charts">
+        <canvas id="dailyChart"></canvas>
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </section>
+
+    <!-- ================= PRODUCTS ================= -->
+    <section id="products" class="section">
+    <!-- ================= ORDERS ================= -->
+
+      <!-- ADD PRODUCT -->
+      <div class="card compact-card">
+        <h2>Add Product</h2>
+
+        <form id="productForm" class="add-product-form pro-form">
+        <div>
+  <label>Cost Price (Admin)</label>
+  <input
+    id="costPrice"
+    type="number"
+    placeholder="₹ Cost price"
+    required
+  />
+</div>
+
+  <!-- BASIC INFO -->
+  <div class="form-section">
+    <h4>Basic Information</h4>
+
+    <div class="grid-2">
+      <div>
+        <label>Product Name</label>
+        <input id="name" placeholder="Enter product name" required />
+      </div>
+
+      <div>
+        <label>Normal Price</label>
+        <input id="originalPrice" type="number" placeholder="₹ Original price" required />
+      </div>
+
+      <div>
+        <label>Offer Price</label>
+        <input id="offerPrice" type="number" placeholder="₹ Offer price (optional)" />
+      </div>
+    </div>
+  </div>
+
+  <!-- FLAGS -->
+  <div class="form-section flags">
+    <label class="flag">
+      <input type="checkbox" id="isBestSeller">
+      <span>🔥 Best Seller</span>
+    </label>
+
+    <label class="flag">
+      <input type="checkbox" id="isNewArrival">
+      <span>🆕 New Arrival</span>
+    </label>
+
+    <label class="flag">
+      <input type="checkbox" id="isActive" checked>
+      <span>Active</span>
+    </label>
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="form-section">
+    <h4>Description</h4>
+    <textarea
+      id="description"
+      placeholder="Short, clear product description (max 2–3 lines)">
+    </textarea>
+  </div>
+
+  <!-- IMAGES -->
+  <div class="form-section">
+    <h4>Product Images</h4>
+
+    <div class="upload-box">
+      <input id="images" type="file" accept="image/*" multiple />
+      <p>Upload up to 5 images (JPG / PNG)</p>
+      <div id="imagePreview" class="image-preview"></div>
+    </div>
+  </div>
+  <!--sizes-->
+  <div class="form-group">
+  <label for="sizes">Available Sizes</label>
+  <input
+    type="text"
+    id="sizes"
+    placeholder="Example: XS, S, M, L, XL"
+  />
+  <small style="color:#777">
+    Enter sizes separated by commas
+  </small>
+</div>
+
+  <!-- ACTION -->
+  <div class="form-actions">
+    <button type="submit" class="btn-primary btn-lg">
+      ➕ Add Product
+    </button>
+  </div>
+
+</form>
+      
+      </div>
+
+      <!-- ALL PRODUCTS -->
+      <div class="card compact-card">
+        <div class="card-header">
+          <h2>All Products</h2>
+          <span class="hint">Edit, activate or delete products</span>
+        </div>
+
+        <div id="productList" class="product-list"></div>
+      </div>
+
+    </section>
+
+    <!-- ================= BANNERS ================= -->
+    <section id="banners" class="section">
+
+      <div class="card compact-card">
+        <h2>Add Advertisement Banner</h2>
+
+        <form id="bannerForm" class="add-product-form">
+
+          <div>
+            <label>Banner Title</label>
+            <input id="bannerTitle" placeholder="Eg: Big Sale" required />
+          </div>
+
+          <div>
+            <label>Subtitle</label>
+            <input id="bannerSubtitle" placeholder="Eg: Flat 40% OFF" />
+          </div>
+
+          <div>
+            <label>Redirect Link</label>
+            <input id="bannerLink" placeholder="https://example.com" />
+          </div>
+
+          <div class="image-upload-box">
+            <label class="upload-label">
+              Upload Banner Image
+              <input id="bannerImage" type="file" accept="image/*" hidden />
+            </label>
+          </div>
+
+          <div class="form-footer">
+            <label class="switch">
+              <input id="bannerActive" type="checkbox" checked />
+              <span>Active</span>
+            </label>
+
+            <button class="btn-primary">Add Banner</button>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="card compact-card">
+        <h2>All Banners</h2>
+        <div id="bannerList" class="product-list"></div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+<!-- ================= ORDERS ================= -->
+<section id="orders" class="section">
+
+  <div class="card">
+    <h2>Orders</h2>
+
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Email</th>
+          <th>Amount</th>
+          <th>Payment</th>
+          <th>Status</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+
+      <tbody id="ordersTable">
+        <!-- JS will inject rows here -->
+      </tbody>
+    </table>
+
+  </div>
+
+</section>
+
+<!-- ================= EDIT PRODUCT MODAL ================= -->
+ <div id="stockModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Update Stock by Size</h3>
+
+    <div id="sizeStockList"></div>
+
+    <div class="modal-actions">
+      <button id="saveStock" class="btn-primary">Save</button>
+      <button id="cancelStock" class="btn-ghost">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="editModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Edit Product</h3>
+
+    <label>Product Name</label>
+    <input id="editName" />
+
+    <label>Normal Price</label>
+    <input id="editOriginalPrice" type="number" />
+
+    <label>Offer Price</label>
+    <input id="editOfferPrice" type="number" />
+
+    <label>Description</label>
+    <textarea id="editDescription"></textarea>
+
+    <!-- FLAGS -->
+    <div class="flags">
+      <label class="flag">
+        <input type="checkbox" id="editBestSeller">
+        <span>🔥 Best Seller</span>
+      </label>
+
+      <label class="flag">
+        <input type="checkbox" id="editNewArrival">
+        <span>🆕 New Arrival</span>
+      </label>
+
+      <label class="flag">
+        <input type="checkbox" id="editActive">
+        <span>Active</span>
+      </label>
+    </div>
+
+    <!-- IMAGE PREVIEW -->
+    <div class="form-section">
+      <h4>Product Images</h4>
+      <input id="editImages" type="file" accept="image/*" multiple />
+      <div id="editImagePreview" class="image-preview"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button id="saveEdit" class="btn-primary">Save</button>
+      <button id="cancelEdit" class="btn-ghost">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="admin.js"></script>
+</body>
+</html>

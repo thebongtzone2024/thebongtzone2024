@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TBZ – The Bong T Zone</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="nav-container">
+      <div class="menu-toggle">☰</div>
+
+      <div class="brand">
+  <span class="brand-name" id="brandName">THE BONG T-ZONE</span>
+
+</div>
+
+
+      <button class="cart-btn">
+        🛒 <span id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- SEARCH -->
+  <div class="search-wrapper">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search products..." />
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section class="products">
+    <h2 class="section-title">Products</h2>
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button id="closeCart">✕</button>
+    </div>
+    <div class="cart-items" id="drawerCartItems"></div>
+    <div class="cart-footer">
+  <p class="cart-total">Total: ₹<span id="drawerTotal">0</span></p>
+  <button class="checkout-btn" onclick="proceedToCheckout()">
+    Proceed to Checkout
+  </button>
+</div>
+
+  </div>
+
+  <!-- HAMBURGER MENU -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <div class="menu-drawer" id="menuDrawer">
+    <div class="menu-header">
+      <h3>THE BONG T-ZONE</h3>
+      <button id="closeMenu">✕</button>
+    </div>
+
+    <nav class="menu-links">
+      <a href="#" data-action="login">Login / Sign Up</a>
+
+      <hr>
+
+      <a href="#" data-action="new">New Arrivals</a>
+      <a href="#" data-action="best">Best Sellers</a>
+      <a href="#" data-action="all">All Products</a>
+
+      <hr>
+
+      <a href="#" data-action="account">My Account</a>
+      <a href="#" data-action="orders">My Orders</a>
+
+      <hr>
+      <a onclick="openSizeChart()">Size Chart</a>
+      <hr>
+      <a href="#" data-action="about">About Us</a>
+    </nav>
+  </div>
+<div id="authOverlay" class="auth-overlay"></div>
+
+<div id="authModal" class="auth-modal">
+  <button id="closeAuth">×</button>
+
+  <h3>Login</h3>
+
+  <div id="phoneStep">
+    <input id="phoneInput" type="tel" placeholder="Enter phone number" />
+    <button id="sendOtpBtn">Send OTP</button>
+  </div>
+
+  <div id="otpStep" style="display:none">
+    <input id="otpInput" type="text" placeholder="Enter OTP" />
+    <button id="verifyOtpBtn">Verify OTP</button>
+  </div>
+
+  <p id="authMsg"></p>
+</div>
+<script src="auth.js"></script>
+
+  <!-- SUPABASE SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="main.js"></script>
+</body>
+</html>
