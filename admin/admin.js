@@ -9,6 +9,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     SUPABASE_ANON_KEY,
     { auth: { persistSession: true } }
   );
+  const bannerImage = document.getElementById("bannerImage");
+const bannerPreview = document.getElementById("bannerPreview");
+  bannerImage.addEventListener("change", () => {
+  const file = bannerImage.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const preview = document.getElementById("bannerPreview");
+    preview.src = reader.result;
+    preview.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+});
+
 
   /* ================= AUTH ================= */
   const { data: sessionData } = await supabaseClient.auth.getSession();
@@ -615,6 +630,98 @@ async function loadRealProfit() {
   document.getElementById("totalProfit").innerText =
     `₹${totalProfit.toFixed(2)}`;
 }
+/* ================= BANNERS (SUPABASE DB) ================= */
+
+const bannerForm = document.getElementById("bannerForm");
+const bannerList = document.getElementById("bannerList");
+
+async function loadBanners() {
+  const { data, error } = await supabaseClient
+    .from("banners")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Banner fetch error:", error);
+    return;
+  }
+
+  bannerList.innerHTML = "";
+
+  data.forEach(b => {
+    const div = document.createElement("div");
+    div.className = "admin-product";
+
+    div.innerHTML = `
+      <img src="${b.image_url}" style="width:100%; border-radius:8px">
+      <strong>${b.title || ""}</strong>
+      <p>${b.subtitle || ""}</p>
+      <small>${b.is_active ? "Active" : "Inactive"}</small>
+      <br>
+      <button class="btn-danger">Delete</button>
+    `;
+
+    div.querySelector("button").onclick = async () => {
+      if (!confirm("Delete banner?")) return;
+      await supabaseClient.from("banners").delete().eq("id", b.id);
+      loadBanners();
+    };
+
+    bannerList.appendChild(div);
+  });
+}
+
+bannerForm.addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const file = bannerImage.files[0];
+  if (!file) {
+    alert("Please upload banner image");
+    return;
+  }
+
+  // Upload image to Supabase Storage
+  const path = `banners/${crypto.randomUUID()}-${file.name}`;
+
+  const { error: uploadError } = await supabaseClient
+    .storage
+    .from("banner-images")
+    .upload(path, file, { upsert: true });
+
+  if (uploadError) {
+    alert("Image upload failed");
+    console.error(uploadError);
+    return;
+  }
+
+  const { data: imageData } = supabaseClient
+    .storage
+    .from("banner-images")
+    .getPublicUrl(path);
+
+  // Insert banner into DB
+  const { error } = await supabaseClient.from("banners").insert({
+    title: bannerTitle.value,
+    subtitle: bannerSubtitle.value,
+    link: bannerLink.value,
+    image_url: imageData.publicUrl,
+    is_active: bannerActive.checked,
+    position: "home"
+  });
+
+  if (error) {
+    alert("Failed to save banner");
+    console.error(error);
+    return;
+  }
+
+  bannerForm.reset();
+  bannerPreview.style.display = "none";
+  loadBanners();
+});
+
+loadBanners();
+
 
   /* ================= INIT ================= */
   loadAdminProducts(); 
