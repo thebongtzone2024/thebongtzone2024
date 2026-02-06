@@ -370,6 +370,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   loadProducts();
   setupSearch();
   updateCartCount();
+  
+  loadFrontendBanner();
 document.getElementById("closeAuth")?.addEventListener("click", closeAuthModal);
 document.getElementById("authOverlay")?.addEventListener("click", closeAuthModal);
 
@@ -490,4 +492,151 @@ function closeAuthModal() {
   document.getElementById("authOverlay").style.display = "none";
   document.getElementById("authModal").style.display = "none";
   document.body.classList.remove("auth-open");
+}
+/**************************************************
+ * FRONTEND BANNER (SUPABASE)
+ **************************************************/
+async function loadFrontendBanner() {
+  const bannerBox = document.getElementById("frontendBanner");
+  if (!bannerBox) {
+    console.warn("frontendBanner div not found");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("banners")
+    .select("*")
+    .eq("is_active", true)
+    .eq("position", "home")
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  if (error) {
+    console.error("Banner fetch error:", error);
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    console.warn("No active banner found");
+    return;
+  }
+  bannerBox.querySelector(".banner-frame").innerHTML = `
+  <a href="${data.link || '#'}">
+    <img
+      src="${data.image_url}"
+      alt="${data.title || 'Banner'}"
+    />
+  </a>
+`;
+
+  const banner = data[0];
+
+  bannerBox.innerHTML = `
+    <a href="${banner.link || '#'}">
+      <img
+        src="${banner.image_url}"
+        alt="${banner.title || 'Banner'}"
+        style="width:100%; border-radius:12px;"
+      />
+    </a>
+  `;
+}
+/**************************************************
+ * FRONTEND BANNER – AUTOPLAY 3s + MANUAL CONTROL
+ **************************************************/
+async function loadFrontendBanner() {
+  const bannerBox = document.getElementById("frontendBanner");
+  if (!bannerBox) return;
+
+  const { data: banners, error } = await supabaseClient
+    .from("banners")
+    .select("*")
+    .eq("is_active", true)
+    .eq("position", "home")
+    .order("created_at", { ascending: true });
+
+  if (error || !banners || banners.length === 0) return;
+
+  bannerBox.innerHTML = `
+    <div class="banner-frame">
+      <a id="bannerLink" href="#">
+        <img id="bannerImg" />
+      </a>
+      <div class="banner-dots"></div>
+    </div>
+  `;
+
+  const img = document.getElementById("bannerImg");
+  const link = document.getElementById("bannerLink");
+  const dotsWrap = bannerBox.querySelector(".banner-dots");
+
+  let index = 0;
+  let startX = 0;
+
+  /* ---------- DOTS ---------- */
+  banners.forEach((_, i) => {
+    const dot = document.createElement("span");
+    dot.className = i === 0 ? "dot active" : "dot";
+    dot.onclick = () => {
+      index = i;
+      showBanner(index);
+      resetAutoplay();
+    };
+    dotsWrap.appendChild(dot);
+  });
+
+  const dots = dotsWrap.querySelectorAll(".dot");
+
+  function updateDots(i) {
+    dots.forEach(d => d.classList.remove("active"));
+    dots[i].classList.add("active");
+  }
+
+  /* ---------- SHOW BANNER ---------- */
+  function showBanner(i) {
+    img.style.opacity = "0";
+
+    setTimeout(() => {
+      img.src = banners[i].image_url;
+      link.href = banners[i].link || "#";
+      img.style.opacity = "1";
+      updateDots(i);
+    }, 250);
+  }
+
+  /* ---------- AUTOPLAY ---------- */
+  let autoplay = setInterval(nextBanner, 3000);
+
+  function nextBanner() {
+    index = (index + 1) % banners.length;
+    showBanner(index);
+  }
+
+  function resetAutoplay() {
+    clearInterval(autoplay);
+    autoplay = setInterval(nextBanner, 3000);
+  }
+
+  /* ---------- INIT ---------- */
+  showBanner(0);
+
+  /* ---------- SWIPE (MOBILE) ---------- */
+  img.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+  });
+
+  img.addEventListener("touchend", e => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        index = (index + 1) % banners.length;
+      } else {
+        index = (index - 1 + banners.length) % banners.length;
+      }
+      showBanner(index);
+      resetAutoplay();
+    }
+  });
 }
