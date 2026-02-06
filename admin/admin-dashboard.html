@@ -185,12 +185,20 @@
             <label>Redirect Link</label>
             <input id="bannerLink" placeholder="https://example.com" />
           </div>
-
+          <div>
+          <lable>Strating Date</lable>
+          <input type="date" id="bannerStartDate">
+          </div>
+          <div>
+          <lable>Expiry Date</lable>
+          <input type="date" id="bannerExpiryDate">
+          </div>
           <div class="image-upload-box">
-            <label class="upload-label">
-              Upload Banner Image
-              <input id="bannerImage" type="file" accept="image/*" hidden />
+            <label class="upload-label" for="bannerImage">
+            Upload Banner Image
             </label>
+            <input id="bannerImage" type="file" accept="image/*" hidden />
+
           </div>
 
           <div class="form-footer">
@@ -199,7 +207,7 @@
               <span>Active</span>
             </label>
 
-            <button class="btn-primary">Add Banner</button>
+            <button type="submit" class="btn-primary">Add Banner</button>
           </div>
 
         </form>
@@ -211,6 +219,7 @@
       </div>
 
     </section>
+  <img id="bannerPreview" style="max-width:100%; margin-top:10px; display:none; border-radius:8px;">
 
   </main>
 </div>
