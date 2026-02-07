@@ -37,6 +37,22 @@
         <span>Total</span>
         <strong>₹<span id="checkoutTotal">0</span></strong>
       </div>
+      <!-- COUPON SECTION -->
+<div class="coupon-section">
+  <h3>Apply Coupon</h3>
+
+  <input
+    type="text"
+    id="couponInput"
+    placeholder="Enter coupon code"
+  />
+  <button onclick="applyCoupon()">Apply</button>
+
+  <p id="couponMessage"></p>
+
+  <h4>Available Coupons</h4>
+  <ul id="availableCoupons"></ul>
+</div>
 
       <button class="place-order-btn" onclick="placeOrder()">
         Place Order
@@ -44,7 +60,7 @@
     </aside>
 
   </main>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- JS -->
   <script src="checkout.js"></script>
 </body>
