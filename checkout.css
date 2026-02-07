@@ -190,3 +190,70 @@ body:not(.logged-in) [data-action="account"],
 body:not(.logged-in) [data-action="orders"] {
   display: none;
 }
+/* ================= COUPON SECTION ================= */
+
+.coupon-section {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #f0d6d9;
+}
+
+.coupon-section h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #5b2a2a;
+}
+
+.coupon-section input {
+  width: 65%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #e7c1c6;
+  font-size: 14px;
+  outline: none;
+}
+
+.coupon-section input:focus {
+  border-color: #d8a1a8;
+}
+
+.coupon-section button {
+  padding: 8px 14px;
+  margin-left: 6px;
+  border-radius: 6px;
+  border: none;
+  background: linear-gradient(135deg, #d8a1a8, #c78990);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.coupon-section button:hover {
+  opacity: 0.9;
+}
+
+#couponMessage {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #8b3a42;
+}
+
+.coupon-section h4 {
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #5b2a2a;
+}
+
+#availableCoupons {
+  margin-top: 6px;
+  padding-left: 14px;
+}
+
+#availableCoupons li {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #6b3b40;
+}
