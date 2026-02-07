@@ -28,6 +28,7 @@
     <a data-section="products">Products</a>
     <a data-section="banners">Banners</a>
     <a data-section="orders">Orders</a>
+    <a data-section="coupons">Coupons</a>
     <a id="logoutBtn">Logout</a>
   </aside>
 
@@ -223,6 +224,64 @@
 
   </main>
 </div>
+<!-- ================= COUPONS ================= -->
+<section id="coupons" class="section">
+
+  <!-- ADD COUPON -->
+  <div class="card compact-card">
+    <h2>Create Coupon</h2>
+
+    <form id="couponForm" class="add-product-form">
+      <div>
+        <label>Coupon Code</label>
+        <input
+          id="couponCode"
+          placeholder="SAVE20"
+          required
+        />
+      </div>
+
+      <div>
+        <label>Discount (%)</label>
+        <input
+          id="couponDiscount"
+          type="number"
+          placeholder="20"
+          required
+        />
+      </div>
+
+      <div>
+        <label>Minimum Order Amount</label>
+        <input
+          id="couponMinAmount"
+          type="number"
+          placeholder="2000"
+          required
+        />
+      </div>
+
+      <div class="form-footer">
+        <label class="switch">
+          <input id="couponActive" type="checkbox" checked />
+          <span>Active</span>
+        </label>
+
+        <button type="submit" class="btn-primary">
+          ➕ Create Coupon
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ALL COUPONS -->
+  <div class="card compact-card">
+    <h2>All Coupons</h2>
+    <div id="couponList" class="product-list"></div>
+  </div>
+
+</section>
+
 <!-- ================= ORDERS ================= -->
 <section id="orders" class="section">
 
