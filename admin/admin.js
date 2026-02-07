@@ -630,6 +630,102 @@ async function loadRealProfit() {
   document.getElementById("totalProfit").innerText =
     `₹${totalProfit.toFixed(2)}`;
 }
+/* ================= COUPONS ================= */
+
+const couponForm = document.getElementById("couponForm");
+const couponList = document.getElementById("couponList");
+couponForm.addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const code = document
+    .getElementById("couponCode")
+    .value
+    .trim()
+    .toUpperCase();
+
+  const discount = Number(
+    document.getElementById("couponDiscount").value
+  );
+
+  const minAmount = Number(
+    document.getElementById("couponMinAmount").value
+  );
+
+  const active = document.getElementById("couponActive").checked;
+
+  if (!code || !discount || minAmount < 0) {
+    alert("Please fill all coupon fields correctly");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("coupons")
+    .insert({
+      code,
+      discount,
+      min_amount: minAmount,
+      active
+    });
+
+  if (error) {
+    alert("Failed to create coupon");
+    console.error(error);
+    return;
+  }
+
+  couponForm.reset();
+  loadCoupons();
+});
+async function loadCoupons() {
+  const { data, error } = await supabaseClient
+    .from("coupons")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Coupon fetch error:", error);
+    return;
+  }
+
+  couponList.innerHTML = "";
+
+  data.forEach(c => {
+    const div = document.createElement("div");
+    div.className = "admin-product";
+
+    div.innerHTML = `
+      <strong>${c.code}</strong>
+      <p>${c.discount}% OFF on orders above ₹${c.min_amount}</p>
+      <small>Status: ${c.active ? "Active" : "Inactive"}</small>
+      <div class="admin-actions">
+        <button class="btn-warning toggle-btn">
+          ${c.active ? "Deactivate" : "Activate"}
+        </button>
+      </div>
+    `;
+
+    div.querySelector(".toggle-btn").onclick = async () => {
+      await toggleCoupon(c.id, !c.active);
+    };
+
+    couponList.appendChild(div);
+  });
+}
+async function toggleCoupon(id, newStatus) {
+  const { error } = await supabaseClient
+    .from("coupons")
+    .update({ active: newStatus })
+    .eq("id", id);
+
+  if (error) {
+    alert("Failed to update coupon");
+    console.error(error);
+    return;
+  }
+
+  loadCoupons();
+}
+
 /* ================= BANNERS (SUPABASE DB) ================= */
 
 const bannerForm = document.getElementById("bannerForm");
@@ -729,4 +825,5 @@ loadBanners();
   loadRevenueCharts();
   loadDashboardKPIs(); 
   loadRealProfit()
+  loadCoupons();
 }); 
